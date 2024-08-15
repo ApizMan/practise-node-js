@@ -10,29 +10,24 @@ import { SignUpSchema } from "../schema/users";
 
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        SignUpSchema.parse(req.body)
-        const { email, password, name } = req.body;
+    SignUpSchema.parse(req.body)
+    const { email, password, name } = req.body;
 
-        let user = await primaClient.user.findFirst({ where: { email } })
+    let user = await primaClient.user.findFirst({ where: { email } })
 
-        if (user) {
-            next(new BadRequestsException('User Already Exist', ErrorCode.USER_ALREADY_EXIST))
-        }
-
-        user = await primaClient.user.create({
-            data: {
-                name,
-                email,
-                password: hashSync(password, 10),
-            }
-        })
-
-        res.json(user)
-    } catch (error: any) {
-        next(new UnprocessableEntity(error?.issues, 'Unprocessable Entity', ErrorCode.UNPROCESSABLE_ENTITY))
+    if (user) {
+        next(new BadRequestsException('User Already Exist', ErrorCode.USER_ALREADY_EXIST))
     }
 
+    user = await primaClient.user.create({
+        data: {
+            name,
+            email,
+            password: hashSync(password, 10),
+        }
+    })
+
+    res.json(user)
 }
 
 

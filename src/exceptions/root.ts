@@ -20,5 +20,6 @@ export enum ErrorCode {
     USER_ALREADY_EXIST = 1002,
     INCORRECT_PASSWORD = 1003,
     UNPROCESSABLE_ENTITY = 2001,
+    INTERNAL_EXCEPTION = 3001,
     // Add more error codes as needed
 }
