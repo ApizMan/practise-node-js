@@ -7,6 +7,7 @@ import { BadRequestsException } from "../exceptions/bad-requests";
 import { ErrorCode } from "../exceptions/root";
 import { UnprocessableEntity } from "../exceptions/validation";
 import { SignUpSchema } from "../schema/users";
+import { NotFoundException } from "../exceptions/not-found";
 
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
@@ -37,16 +38,21 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     let user = await primaClient.user.findFirst({ where: { email } })
 
     if (!user) {
-        next(new BadRequestsException('User Not Found', ErrorCode.USER_NOT_FOUND))
+        throw new NotFoundException('User Not Found', ErrorCode.USER_NOT_FOUND)
     }
 
-    if (!compareSync(password, user!.password)) {
-        next(new BadRequestsException('Incorrect Password', ErrorCode.INCORRECT_PASSWORD))
+    if (!compareSync(password, user.password)) {
+        throw new BadRequestsException('Incorrect Password', ErrorCode.INCORRECT_PASSWORD)
     }
 
     const token = jwt.sign({
-        userId: user!.id,
+        userId: user.id,
     }, JWT_SECRET)
 
     res.json({ user, token })
+}
+
+// me API --> return the logged in user
+export const me = async (req: any, res: Response, next: NextFunction) => {
+    res.json(req.user)
 }
