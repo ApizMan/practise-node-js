@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { primaClient } from "..";
+import { prismaClient } from "..";
 import { hashSync, compareSync } from "bcrypt";
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET } from "../secrets";
@@ -14,13 +14,13 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
     SignUpSchema.parse(req.body)
     const { email, password, name } = req.body;
 
-    let user = await primaClient.user.findFirst({ where: { email } })
+    let user = await prismaClient.user.findFirst({ where: { email } })
 
     if (user) {
         next(new BadRequestsException('User Already Exist', ErrorCode.USER_ALREADY_EXIST))
     }
 
-    user = await primaClient.user.create({
+    user = await prismaClient.user.create({
         data: {
             name,
             email,
@@ -35,7 +35,7 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
-    let user = await primaClient.user.findFirst({ where: { email } })
+    let user = await prismaClient.user.findFirst({ where: { email } })
 
     if (!user) {
         throw new NotFoundException('User Not Found', ErrorCode.USER_NOT_FOUND)

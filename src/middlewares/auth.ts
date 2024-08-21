@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { UnauthorizedException } from "../exceptions/unathorized";
+import { UnauthorizedException } from "../exceptions/unauthorized";
 import { ErrorCode } from "../exceptions/root";
 import * as jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../secrets";
-import { primaClient } from "..";
+import { prismaClient } from "..";
 
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     // 1. Extract the token from header
@@ -19,7 +19,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
         const payload: { userId: number } = jwt.verify(token!, JWT_SECRET) as any
 
         // 4. to get the user from the payload
-        const user = await primaClient.user.findFirst({ where: { id: payload.userId } })
+        const user = await prismaClient.user.findFirst({ where: { id: payload.userId } })
 
         if (!user) {
             next(new UnauthorizedException('Unauthorized', ErrorCode.UNAUTHORIZED))
