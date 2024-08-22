@@ -25,5 +25,7 @@ export enum ErrorCode {
     INTERNAL_EXCEPTION = 3001,
     UNAUTHORIZED = 4001,
     PRODUCT_NOT_FOUND = 5001,
+    ITEM_NOT_FOUND = 5002,
+    ITEM_NOT_BELONG_TO_USER = 5003,
     // Add more error codes as needed
 }
