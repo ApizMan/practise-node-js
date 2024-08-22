@@ -3,8 +3,11 @@ import { prismaClient } from "..";
 import { NotFoundException } from "../exceptions/not-found";
 import { ErrorCode } from "../exceptions/root";
 import { count } from "console";
+import { ProductSchema } from "../schema/products";
 
 export const createProduct = async (req: Request, res: Response) => {
+
+    ProductSchema.parse(req.body)
 
     const product = await prismaClient.product.create({
         data: {
@@ -90,7 +93,7 @@ export const getProductById = async (req: Request, res: Response) => {
         })
 
         res.json(product)
-        
+
     } catch (error) {
         throw new NotFoundException('Product Not Found.', ErrorCode.PRODUCT_NOT_FOUND)
     }
