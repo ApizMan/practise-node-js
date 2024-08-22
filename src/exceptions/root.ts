@@ -22,5 +22,6 @@ export enum ErrorCode {
     UNPROCESSABLE_ENTITY = 2001,
     INTERNAL_EXCEPTION = 3001,
     UNAUTHORIZED = 4001,
+    PRODUCT_NOT_FOUND = 4002
     // Add more error codes as needed
 }

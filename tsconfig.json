@@ -109,6 +109,6 @@
       "./custom_typings",
       "./@types",
       "./node_modules/@types"
-    ]                                 /* Skip type checking all .d.ts files. */
+    ]                      /* Skip type checking all .d.ts files. */
   }
 }
