@@ -32,6 +32,7 @@ model User {
 
   // Refer between other table
   addresses Address[]
+  CartItem  CartItem[]
 
   @@map("users")
 }
@@ -62,5 +63,22 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  cartItem CartItem[]
+
   @@map("products")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship between other table
+  userId    Int     @map("user_id")
+  user      User    @relation(fields: [userId], references: [id])
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("cart_items")
 }
