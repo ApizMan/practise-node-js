@@ -32,3 +32,6 @@ Basic Command for Node.Js:
 
 23. Create a sperate route
 24. Create a controller
+
+25. Setup up the seeder on the package.json inside the scripts part --> "seed": "ts-node prisma/seeder/product-seeder.ts"
+26. Run Seeder --> npm run seed
