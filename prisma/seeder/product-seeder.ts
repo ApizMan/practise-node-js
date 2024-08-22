@@ -5,23 +5,23 @@ const prisma = new PrismaClient();
 
 async function main() {
     // Seed Users
-    await prisma.user.create({
-        data: {
-            name: 'Admin User',
-            email: 'admin@example.com',
-            password: 'adminpassword',
-            role: 'ADMIN',
-        },
-    });
+    // await prisma.user.create({
+    //     data: {
+    //         name: 'Admin User',
+    //         email: 'admin@example.com',
+    //         password: 'adminpassword',
+    //         role: 'ADMIN',
+    //     },
+    // });
 
-    await prisma.user.create({
-        data: {
-            name: 'Regular User',
-            email: 'user@example.com',
-            password: 'userpassword',
-            role: 'USER',
-        },
-    });
+    // await prisma.user.create({
+    //     data: {
+    //         name: 'Regular User',
+    //         email: 'user@example.com',
+    //         password: 'userpassword',
+    //         role: 'USER',
+    //     },
+    // });
 
     // Seed 50 Products
     for (let i = 1; i <= 50; i++) {

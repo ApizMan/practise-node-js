@@ -15,7 +15,11 @@ export const createProduct = async (req: Request, res: Response) => {
             tags: req.body.tags.join(',')
         }
     })
-    res.json(product)
+    res.json({
+        success: true,
+        message: "Product Created Successfully",
+        data: product
+    })
 }
 
 export const updateProduct = async (req: Request, res: Response) => {
@@ -34,7 +38,11 @@ export const updateProduct = async (req: Request, res: Response) => {
             data: product
         })
 
-        res.json(updateProduct)
+        res.json({
+            success: true,
+            message: 'Product Updated Successful',
+            data: updateProduct
+        })
 
     } catch (error) {
         throw new NotFoundException('Product Not Found.', ErrorCode.PRODUCT_NOT_FOUND)
@@ -51,8 +59,8 @@ export const deleteProduct = async (req: Request, res: Response) => {
         })
 
         res.json({
-            message: 'Product deleted successfully',
-            product: deletedProduct,
+            success: true,
+            message: 'Product deleted successfully'
         })
 
     } catch (error) {
@@ -77,6 +85,7 @@ export const listProducts = async (req: Request, res: Response) => {
     })
 
     res.json({
+        success: true,
         count: count,
         data: products
     })
@@ -92,7 +101,11 @@ export const getProductById = async (req: Request, res: Response) => {
             }
         })
 
-        res.json(product)
+        res.json({
+            success: true,
+            message: "Product Display Successful",
+            data: product
+        })
 
     } catch (error) {
         throw new NotFoundException('Product Not Found.', ErrorCode.PRODUCT_NOT_FOUND)

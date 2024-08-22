@@ -28,7 +28,11 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
         }
     })
 
-    res.json(user)
+    res.json({
+        success: true,
+        message: "User Created Successful",
+        user: user
+    })
 }
 
 
