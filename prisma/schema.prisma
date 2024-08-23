@@ -18,6 +18,14 @@ enum Role {
   USER
 }
 
+enum OrderEventStatus {
+  PENDING
+  ACCEPTED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCEL
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -32,7 +40,8 @@ model User {
 
   // Refer between other table
   addresses Address[]
-  CartItem  CartItem[]
+  cartItem  CartItem[]
+  Order     Order[]
 
   @@map("users")
 }
@@ -63,7 +72,8 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  cartItem CartItem[]
+  cartItem     CartItem[]
+  orderProduct OrderProduct[]
 
   @@map("products")
 }
@@ -81,4 +91,48 @@ model CartItem {
   product   Product @relation(fields: [productId], references: [id])
 
   @@map("cart_items")
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  netAmount Decimal
+  address   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship between other table
+  userId       Int            @map("user_id")
+  user         User           @relation(fields: [userId], references: [id])
+  orderProduct OrderProduct[]
+  orderEvent   OrderEvent[]
+
+  @@map("orders")
+}
+
+model OrderProduct {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship between other table
+  orderId   Int     @map("order_id")
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("order_products")
+}
+
+model OrderEvent {
+  id        Int      @id @default(autoincrement())
+  status  OrderEventStatus  @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship between other table
+  orderId Int   @map("order_id")
+  order   Order @relation(fields: [orderId], references: [id])
+
+  @@map("order_events")
 }
