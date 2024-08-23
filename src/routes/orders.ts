@@ -7,7 +7,7 @@ const ordersRouters: Router = Router();
 
 ordersRouters.post('/createOrder', [authMiddleware], errorHandler(createOrder))
 ordersRouters.get('/getListOrder', [authMiddleware], errorHandler(listOrder))
-ordersRouters.get('/:id/cancelOrder', [authMiddleware], errorHandler(cancelOrder))
+ordersRouters.put('/:id/cancelOrder', [authMiddleware], errorHandler(cancelOrder))
 ordersRouters.get('/:id/getOrder', [authMiddleware], errorHandler(getOrderById))
 
 export default ordersRouters

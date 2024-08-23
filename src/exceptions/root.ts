@@ -27,5 +27,6 @@ export enum ErrorCode {
     PRODUCT_NOT_FOUND = 5001,
     ITEM_NOT_FOUND = 5002,
     ITEM_NOT_BELONG_TO_USER = 5003,
+    ORDER_NOT_FOUND = 6001,
     // Add more error codes as needed
 }
