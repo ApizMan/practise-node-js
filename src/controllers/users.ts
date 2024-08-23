@@ -4,7 +4,6 @@ import { prismaClient } from "..";
 import { NotFoundException } from "../exceptions/not-found";
 import { ErrorCode } from "../exceptions/root";
 import { Address } from "@prisma/client";
-import { date } from "zod";
 import { BadRequestsException } from "../exceptions/bad-requests";
 
 export const addAddress = async (req: Request, res: Response) => {
@@ -115,4 +114,26 @@ export const updateUser = async (req: Request, res: Response) => {
         message: 'User Updated Successful',
         date: updateUser,
     })
+}
+
+export const listUsers = async (req: Request, res: Response) => {
+
+    const users = await prismaClient.user.findMany({
+        skip: +req.query.skip! || 0,
+        take: 5,
+    })
+
+    res.json({
+        success: true,
+        message: 'Users Retrieved Successful',
+        data: users,
+    })
+}
+
+export const getUserById = async (req: Request, res: Response) => {
+
+}
+
+export const changeUserRole = async (req: Request, res: Response) => {
+
 }
